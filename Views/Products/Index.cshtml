@@ -1,10 +1,10 @@
 @model List<entasp.Models.Product>
 
 @{
-    ViewData["Title"] = "Products";
+    ViewData["Title"] = "Menu";
 }
 
-<h1>Products</h1>
+<h1>Menu</h1>
 
 <form asp-action="Index" method="get" class="mb-3">
     <input type="text"
@@ -23,53 +23,60 @@
     </a>
 </form>
 
-<a asp-action="Create" class="btn btn-primary mb-3">
+<a asp-action="Create" class="btn btn-success mb-4">
     + Add Product
 </a>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+<div class="row">
+    @foreach (var p in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card product-card shadow-sm">
+                <div class="card-body">
 
-    <tbody>
-        @foreach (var p in Model)
-        {
-            <tr>
-                <td>@p.Id</td>
-                <td>@p.Name</td>
-                <td>@p.Description</td>
-                <td>₱@p.Price.ToString("0.00")</td>
-                <td>@p.Category</td>
+                    <h5 class="card-title">
+                        @p.Name
+                    </h5>
 
-                <td>
-                    <a asp-action="Edit"
-                       asp-route-id="@p.Id"
-                       class="btn btn-sm btn-warning">
-                        Edit
-                    </a>
+                    <p class="card-text">
+                        @p.Description
+                    </p>
 
-                    <a asp-action="Delete"
-                       asp-route-id="@p.Id"
-                       class="btn btn-sm btn-danger"
-                       onclick="return confirm('Delete this product?')">
-                        Delete
-                    </a>
+                    <p class="mb-1">
+                        <strong>Price:</strong>
+                        ₱@p.Price.ToString("0.00")
+                    </p>
 
-                    <a asp-action="AddToCart"
-                       asp-route-id="@p.Id"
-                       class="btn btn-sm btn-success">
-                        Add to Cart
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    <p class="mb-3">
+                        <strong>Category:</strong>
+                        @p.Category
+                    </p>
+
+                    <div class="card-actions">
+
+                        <a asp-action="Edit"
+                           asp-route-id="@p.Id"
+                           class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@p.Id"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this product?')">
+                            Delete
+                        </a>
+
+                        <a asp-action="AddToCart"
+                           asp-route-id="@p.Id"
+                           class="btn btn-success btn-sm mt-2 w-100">
+                            Add to Cart
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
